@@ -43,4 +43,6 @@ Example:
 * * * * * /home/ubuntu/.local/share/virtualenvs/paytm-KhZiLQF8/bin/python3.7 /home/ubuntu/paytm/paytm.py >> /home/ubuntu/paytm/paytm.log 2>&1
 ```
 
+Once match is found, make sure to reset paytm.txt to "False" if you want to use this script again
+
 
