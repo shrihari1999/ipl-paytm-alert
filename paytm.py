@@ -72,10 +72,10 @@ for hit in response['results'][0]['hits']:
     hit_name = hit['name'].lower()
     if all([keyword in hit_name for keyword in keywords]):
         match_url = f"https://insider.in/{hit['slug']}/event"
-        # send_mails(search_term, match_url)
+        send_mails(search_term, match_url)
         # write True to file
         with open('paytm.txt', 'w') as f:
             f.write('True')
         while True:
-            # send_alerts(search_term)
+            send_alerts(search_term)
             sleep(10)
