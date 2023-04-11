@@ -1,10 +1,10 @@
-import requests, smtplib, ssl, urllib.parse
+import requests, smtplib, ssl, urllib.parse, os
 from time import sleep
 from exponent_server_sdk import DeviceNotRegisteredError, PushClient, PushMessage, PushServerError, PushTicketError
 from requests.exceptions import ConnectionError, HTTPError
 
 # dont run if file has value True
-with open('paytm.txt', 'r') as f:
+with open(os.path.join(os.path.dirname(__file__), 'paytm.txt'), 'r') as f:
     if f.read() == 'True':
         exit()
 
@@ -74,7 +74,7 @@ for hit in response['results'][0]['hits']:
         match_url = f"https://insider.in/{hit['slug']}/event"
         send_mails(search_term, match_url)
         # write True to file
-        with open('paytm.txt', 'w') as f:
+        with open(os.path.join(os.path.dirname(__file__), 'paytm.txt'), 'w') as f:
             f.write('True')
         while True:
             send_alerts(search_term)
