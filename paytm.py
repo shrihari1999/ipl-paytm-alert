@@ -70,7 +70,7 @@ data = {
 response = requests.post(url, headers=headers, json=data).json()
 for hit in response['results'][0]['hits']:
     hit_name = hit['name'].lower()
-    if all([keyword in hit_name for keyword in keywords]):
+    if all([keyword in hit_name for keyword in keywords]) and hit['event_state'] == 'available':
         match_url = f"https://insider.in/{hit['slug']}/event"
         send_mails(search_term, match_url)
         # write True to file
