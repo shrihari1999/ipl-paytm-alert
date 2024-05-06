@@ -20,6 +20,13 @@ Push notifications are sent every 10 seconds
 1. To get Expo push token, refer to https://docs.expo.dev/versions/latest/sdk/notifications/#getexpopushtokenasyncoptions. You need to know your way around React and Expo to easily get this
 2. Enter the push tokens in expo_tokens array
 
+### LINE notifications
+
+LINE notifications are sent every 10 seconds
+
+1. To get LINE, refer to https://notify-bot.line.me/en/ and it's docs. First, you would need to create a service. Then, as a user of that service, you would need to get an access token for a particular chat.
+2. Pass the access token to the LineNotify class
+
 ## Run
 As a prerequisite, make sure you have python3.7, pip and pipenv installed.
 
