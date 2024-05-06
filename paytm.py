@@ -1,5 +1,6 @@
 import requests, smtplib, ssl, urllib.parse, os
 from time import sleep
+from line_notify import LineNotify
 from exponent_server_sdk import DeviceNotRegisteredError, PushClient, PushMessage, PushServerError, PushTicketError
 from requests.exceptions import ConnectionError, HTTPError
 
@@ -9,11 +10,11 @@ with open(os.path.join(os.path.dirname(__file__), 'paytm.txt'), 'r') as f:
         exit()
 
 def send_mails(search_term, match_url):
-    sender_email = ''
-    password = ''
+    sender_email = '' # TODO: Enter sender email
+    password = '' # TODO: Enter sender email password
     port = 587  # For SSL
     
-    recipients = []
+    recipients = [] # TODO: Enter recipient emails
     message = f"""\
     Subject: IPL {search_term} tickets available!
 
@@ -30,9 +31,9 @@ def send_mails(search_term, match_url):
             server.sendmail(sender_email, recipient, message)
 
 def send_alerts(search_term):
-    expo_tokens = []
+    expo_tokens = [] # TODO: Enter expo tokens
+    push_message = PushMessage(to=expo_push_token, title=f"IPL {search_term} tickets available!", body=f"IPL {search_term} tickets available!")
     for expo_push_token in expo_tokens:
-        push_message = PushMessage(to=expo_push_token, title=f"IPL {search_term} tickets available!", body=f"IPL {search_term} tickets available!")
         try:
             response = PushClient().publish(push_message)
             try:
@@ -50,6 +51,11 @@ def send_alerts(search_term):
             print('Connection or HTTP error')
     pass
 
+def send_line_alerts(search_term, match_url):
+    message = f"IPL {search_term} tickets available!\n\n{match_url}"
+    notify = LineNotify('') # TODO: Enter LINE access token
+    notify.send(message)
+
 url = "https://1bfwmgchj2-dsn.algolia.net/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20JavaScript%20(3.35.1)%3B%20Browser%20(lite)%3B%20react%20(16.8.6)%3B%20react-instantsearch%20(5.7.0)%3B%20JS%20Helper%20(2.28.1)&x-algolia-application-id=1BFWMGCHJ2&x-algolia-api-key=d96f92a248e8dd9aa36d08c78678a956"
 headers = {
     "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0",
@@ -58,7 +64,7 @@ headers = {
     "content-type": "application/x-www-form-urlencoded",
     "referrer": "https://insider.in/",
 }
-keywords = ['match 29 ', 'chennai']
+keywords = ['match 59 ', 'chennai']
 search_term = ' '.join(keywords)
 query = urllib.parse.quote(search_term)
 data = {
@@ -78,4 +84,5 @@ for hit in response['results'][0]['hits']:
             f.write('True')
         while True:
             send_alerts(search_term)
+            send_line_alerts(search_term, match_url)
             sleep(10)

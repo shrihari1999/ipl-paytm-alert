@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 requests = "*"
 exponent-server-sdk = "*"
+line-notify = "*"
+urllib3 = "==1.26.12"
 
 [dev-packages]
 
